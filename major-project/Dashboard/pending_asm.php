@@ -1,16 +1,14 @@
 <?php
 session_start();
 include "db.php";
-$result = mysqli_query($con,"SELECT * FROM organisations WHERE id = '". $_SESSION["id"]."'");
+$result = mysqli_query($con,"SELECT * FROM incharges WHERE id = '". $_SESSION["id"]."'");
 $row  = mysqli_fetch_array($result);
 if(is_array($row)) {
-    $oid=$row['id'];
-    $name=$row['org_name'];
-$mob= $row['org_mobile'];
-$email=$row['org_email'];
-$image=$row['org_image'];
-$add=$row['org_address'];
-$city=$row['org_city'];
+    $name=$row['incharge_name'];
+$mob= $row['incharge_mobile'];
+$email=$row['incharge_email'];
+$image=$row['incharge_image'];
+$dist=$row['dist_id'];
 
 } else {
 $message = "Invalid Username or Password!";
@@ -75,8 +73,8 @@ $message = "Invalid Username or Password!";
   <!-- inject:css -->
   <link rel="stylesheet" href="css/vertical-layout-light/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
-   <script>
+  <link rel="shortcut icon" href="https://myproject45.000webhostapp.com/major-project/images/cmass.png" />
+   <!--script>
             $(document).ready(function(){
 
           load_data();
@@ -84,7 +82,7 @@ $message = "Invalid Username or Password!";
              function load_data(query)
            {
           $.ajax({
-           url:"req_search.php",
+           url:"pen_search.php",
                method:"POST",
                data:{query:query},
              success:function(data)
@@ -105,45 +103,8 @@ $message = "Invalid Username or Password!";
           }
          });
            });
-           </script>
+           </script-->
 </head>
-<?php
-if(isset($_POST['submit']))
-{
-
-
-$org_id=$_POST['org_id'];
-$cid=$_POST['crop_id'];
-$carea=$_POST['crop_area'];
-$camt=$_POST['crop_amount'];
-$descp=$_POST['description'];
-$image=$_POST['img'];
-$image = $_FILES['img']['name'];
-  	
-  	// Get text
-
-  	// image file directory
-	
-	$target = "https://myproject45.000webhostapp.com/major-project/images/".basename($image);
-move_uploaded_file($_FILES['img']['tmp_name'], $target);
-  //query to insert the variable data into the database
-$sql="INSERT INTO requirements (crop_id,crop_amount,crop_area,org_id,img,description) VALUES ('".$cid."','".$camt."','".$carea."','".$org_id."','".$image."','".$descp."')";
-
- //Execute the query and returning a message
- 
- if(!$result = $con->query($sql))
-{
-  die('Error occured [' . $con->error . ']');
-}
-
-else{
-  		$message="<div style='float:right;width:500px' class='alert alert-success'>
-   <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-    <strong>Success!</strong> Data Added Succesfully.
-  </div>";
-  	}
-  }
-  ?>
 <body>
   <div class="container-scroller">
     
@@ -171,7 +132,7 @@ else{
                 <p class="mb-1 mt-3 font-weight-semibold"><?php echo $name; ?></p>
                 <p class="fw-light text-muted mb-0"><?php echo $email; ?></p>
               </div>
-              <a href="oprofile.php" class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
+              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
               <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i> Messages</a>
               <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2"></i> Activity</a>
               <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-help-circle-outline text-primary me-2"></i> FAQ</a>
@@ -184,7 +145,7 @@ else{
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
             <h1 class="welcome-text" style ="color: #ffffff;">Welcome, <span class="text-green fw-bold" style="color:#27bd15"><?php echo $name; ?></span></h1>
-            <h3 class="welcome-sub-text">Organisation Dashboard </h3>
+            <h3 class="welcome-sub-text">District In-charge Dashboard </h3>
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
@@ -453,16 +414,29 @@ else{
       <nav class="sidebar sidebar-offcanvas" id="sidebar"><br>
         <ul class="nav">
           <li class="nav-item active">
-            <a class="nav-link " href="index.php">
+            <a class="nav-link " href="admin_dash.php">
               <i class="mdi mdi-grid-large menu-icon"></i>
               <span class="menu-title">Dashboard</span>
             </a>
           </li>
-       
-          <li class="nav-item ">
-            <a class="nav-link" href="requirements.php">
+           <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="menu-icon mdi mdi-floor-plan"></i>
+              <span class="menu-title">Assignments</span>
+              <i class="menu-arrow"></i> 
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="assignments.php">Assignments</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pending_asm.php">Pending Assignments</a></li>
+                <li class="nav-item"> <a class="nav-link" href="copleted_asm.php">Completed Assignments</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="farmers.php">
               <i class="menu-icon mdi mdi-layers-outline"></i>
-              <span class="menu-title">Requirements List</span>
+              <span class="menu-title">Farmers List</span>
             </a>
           </li>
           <li class="nav-item">
@@ -474,88 +448,124 @@ else{
         </ul>
       </nav>
       <!-- partial -->
-      
-       <div class="main-panel">
+      <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
-                <center><div style="background:#fff" class="message"><?php if($message!="") { echo $message; } ?></div></center>
-    
             <div class="col-sm-12">
               <div class="home-tab">
                 <div class="d-sm-flex align-items-center justify-content-between border-bottom">
-                 
+                  
                 </div>
                 
-                <center><div style="" class="col md-8">
-                         <div class="card c">
-                <div class="card-body">
-                  <h4 class="card-title">Add Requirements</h4>
-                  
-                 <form class="forms-sample" action="add_req.php" method="POST" enctype="multipart/form-data">
-                     <input hidden type="text" name="org_id" value="<?php echo $oid; ?>">
-                    <div class="form-group row">
-                      <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Crop Type</label>
-                      <div class="col-sm-3">
-                          <select class="form-control" name="crop_type">
-                               <option class="form-control" value="0">Select Crop Type</option>
-                              <option class="form-control" value="1">Rabi</option>
-                              <option class="form-control" value="2">Kharif</option>
-                              <option class="form-control" value="3">Zaid</option>
-                             <option class="form-control" value="4">Vegetables</option>
-                          </select>
-                         </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Crop Name</label>
-                      <div class="col-sm-3">
-                       <select class="form-control" name="crop_id">
-                              <option class="form-control" value="0">Select Crop</option>
-                           
-                           <?php 
-                           $result = mysqli_query($con,"SELECT * FROM crops");
-while($row  = mysqli_fetch_array($result))
-{
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                              <div class="card-body">
+                                <div class="d-sm-flex justify-content-between align-items-start">
+                                  <div>
+                                    <h4 class="card-title card-title-dash"> Assignments List</h4>
+                                  </div>
+                                  <div>
+                                   <!-- <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-account-plus"></i>Add New Requirement</button>
+                                  --></div>
+                                </div>
+                                
+                                  <div style="color:#333;width:200px;" class="input-group">
+  		   <input class="au-input au-input--xl" style="border:none" type="text" name="search_text"  id="search_text"  placeholder="Search for datas..." /> 
+                         
+       </div><br>
+        	<div style="color:#333;" id="result"></div>        
+                       
+                       <div class="table-responsive  mt-1">
+                                  <table class="table select-table">
+                                    <thead>
+                                      <tr>
+                                       
+                                        <th>#ID</th>
+                                        <th>Farmer Name</th>
+                                        <th>Crop Name</th>
+                                        <th>Alloted Crop</th>
+                                        <th>Total Amount</th>
+                                        <th>Status</th>
+                                        <th>Payment Mode</th>
+                                        <th>Payment Status</th>
+                                        
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                           <?php
+//fetch.php
+											include "db.php";
+$connect = $con;
 
-?>
-                               <option class="form-control" value="<?php echo $row['id'];?>"><?php echo $row['crop_name']; ?></option>
-                             <?php
-                             }
-                             ?>
-                             </select>  </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="exampleInputMobile" class="col-sm-3 col-form-label">Crop Quantity</label>
-                      <div class="col-sm-3">
-                        <input type="text" class="form-control" name="crop_area" id="exampleInputMobile" placeholder="Enter Crop Quantity">
+ $query = "SELECT assignments.id,farmers.farmer_name,farmers.farmer_payment_mode,districts.dist_name,crops.crop_name,assignments.alloted_area,assignments.status,assignments.total_amount,assignments.payment_status FROM assignments JOIN farmers ON farmers.id=assignments.farmer_id JOIN districts ON districts.id=assignments.dist_id JOIN crops ON crops.id=assignments.crop_id WHERE assignments.dist_id='".$dist."' AND assignments.status= 'Pending'  ";
+
+
+$result = mysqli_query($connect, $query);
+if(mysqli_num_rows($result) > 0)
+{
+ $cnt=1;
+ while($row = mysqli_fetch_array($result))
+ {
+	 
+	 ?>
+	 
+                                      <tr>
+                                        <td>
+                                          <div class="form-check form-check-flat mt-0">
+                                            <label class="form-check-label">
+                                           <?php echo $cnt;?>.   </div>
+                                        </td>
+                                         <td>
+                                            <h6><?php echo $row["dist_name"];?></h6>
+                                             
+                                        </td>
+                                        <td>
+                                          <h6><?php echo $row["crop_name"];?></h6>
+                                            </td>
+                                        <td>
+                                          <h6>&emsp;<?php echo $row["alloted_area"];?> &nbsp;ton</h6>
+                                         
+                                        </td>
+                                        <td>
+                                          <h6><?php echo $row["total_amount"];?> </h6>
+                                        </td>
+                                        <td>
+                                          <h6><?php echo $row["status"];?> </h6>
+                                        </td>
+                                        <td>
+                                          <h6><?php echo $row["farmer_payment_mode"];?> </h6>
+                                        </td>
+                                        <td>
+                                          <h6><?php echo $row["payment_status"];?> </h6>
+                                        </td>
+                                            
+                                            <!--td><div class="badge badge-opacity-success">Update</div></td-->
+                                      </tr>
+                         <?php
+                         }
+}
+                         ?>             
+                                      
+                                    </tbody>
+                                  </table>
+                                  </div>
+                                   </div>
+              
+                                
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                       
                       </div>
-                    </div>
-                    
-                      <div class="form-group row">
-                      <label for="exampleInputMobile" class="col-sm-3 col-form-label">Crop Amount</label>
-                      <div class="col-sm-3">
-                        <input type="text" class="form-control" name="crop_amount" id="exampleInputMobile" placeholder="Enter Crop Amount">
-                      </div>
-                    </div>
-                    
-                     <div class="form-group row">
-                      <label for="exampleInputMobile" class="col-sm-3 col-form-label">Description</label>
-                      <div class="col-sm-3">
-                        <input type="text" class="form-control" name="description" id="exampleInputMobile" placeholder="Enter Description">
-                      </div>
-                    </div>
-                    
-                     <div class="form-group row">
-                      <label for="exampleInputMobile" class="col-sm-3 col-form-label">Image</label>
-                      <div class="col-sm-3">
-                        <input type="file" class="form-control" name="img" id="exampleInputMobile" placeholder="Enter Description">
-                      </div>
-                    </div>
-                    
-                    
-                    <input style="width:200px" type="submit" class="btn btn-primary me-2" name="submit" value="submit">
-                     </form>
+                      <div class="col-lg-4 d-flex flex-column">
+                        
+                  </div>
                 </div>
-                </div>
+              </div>
+            </div>
           </div>
         </div>
         <!-- content-wrapper ends -->

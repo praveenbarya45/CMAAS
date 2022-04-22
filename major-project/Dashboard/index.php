@@ -40,7 +40,7 @@ $message = "Invalid Username or Password!";
   <!-- inject:css -->
   <link rel="stylesheet" href="css/vertical-layout-light/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
+  <link rel="shortcut icon" href="https://myproject45.000webhostapp.com/major-project/images/cmass.png" />
 </head>
 <body>
   <div class="container-scroller">

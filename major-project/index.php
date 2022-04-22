@@ -80,7 +80,7 @@
                                                 <li class="active"> <a href="index.php"> &emsp; &emsp;Home</a> </li>
                                                 <li> <a href="#about">About</a> </li>
                                                 <li><a href="products.php">Products</a></li>
-                                                <li><a href="#testimonial">Our Team</a></li>
+                                                <li><a href="#our_team">Our Team</a></li>
                                                 <li><a href="#contact">Contact Us</a></li>
                                             </ul>
                                         </nav>

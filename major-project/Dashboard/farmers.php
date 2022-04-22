@@ -74,7 +74,7 @@ $message = "Invalid Username or Password!";
   <!-- inject:css -->
   <link rel="stylesheet" href="css/vertical-layout-light/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
+  <link rel="shortcut icon" href="https://myproject45.000webhostapp.com/major-project/images/cmass.png" />
   
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <!--<script>
@@ -494,6 +494,7 @@ $message = "Invalid Username or Password!";
                                         <th>Area</th>
                                         <th>Contact</th>
                                         <th>Address</th>
+                                        <th><center>Action/Status</center></th>
                                       </tr>
                                     </thead>
                                     <?php
@@ -532,7 +533,100 @@ $message = "Invalid Username or Password!";
                                         <td>
                                           <h6><?php echo $d['farmer_address']; ?></h6>
                                         </td>
-                                        
+                                       
+                                        <td>
+                                        <?php
+                                         
+                                            if($d['status']="Pending"){
+                                                ?>
+                                                 
+                                         
+                                        <div class="w3-container">
+<center>
+    <a href="test.php?id=<?php echo $d['id']; ?>"
+  <button  class="w3-button" style="background: #1a8cff;border-radius:5px;color:#ffffff;">Assign</button></a>
+</center>
+<!--<center><div id="" class="w3-modal" style="margin-left:50px;">
+    <div class="w3-modal-content"style=" max-width:23%; border-radius:5px;">
+      <div class="w3-container" style="padding:10px; max-width:100%;">
+        <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                  <form class="well form-horizontal" action="assign.php?id=<?php echo $d['id']; ?>" method="POST" enctype="multipart/form-data">
+                                
+                       <!-- Form Name <br>
+                       <legend><center><h2><b>Crop Assignment</b></h2></center></legend><br><br>
+                    
+                       <!-- Text input
+                       <div class="col-md-10">
+            <div class="input_field form-group">
+            <span><i style="color:#163f03" aria-hidden="true" class="fa fa-id-card"></i> Select Crop Type</span>            
+<select style="color: #000000;" name='crop_type' class='form-control col-md-6'>
+    <option style='background:#ffffff; color: #000000;' value=''>SELECT</option>
+           <?php
+
+$result = mysqli_query($con,"SELECT * FROM crop_types");
+
+while($row = mysqli_fetch_array($result))
+{
+echo "<option style='background:#ffffff; color: #000000;' value='".$row['id']."'>".$row['type_name']." </option>";
+}
+
+
+?>
+</select>
+</div>
+</div>
+               <div class="col-md-10">
+            <div class="input_field form-group">
+            <span><i style="color:#163f03" aria-hidden="true" class="fa fa-id-card"></i> Select Crop</span>            
+<select style="color: #000000;" name='crop' class='form-control col-md-6'>
+    <option style='background:#ffffff; color: #000000;' value=''>SELECT</option>
+           <?php
+
+$result1 = mysqli_query($con,"SELECT * FROM crops");
+
+while($row1 = mysqli_fetch_array($result1))
+{
+echo "<option style='background:#ffffff; color: #000000;' value='".$row1['id']."'>".$row1['crop_name']." </option>";
+}
+
+mysqli_close($con);
+?>
+</select>
+</div>
+</div>
+                       <div class="col-md-10">
+          <div class="input_field form-group"> <span><i style="color:#163f03" aria-hidden="true" class="fa fa-id-card"></i> Enter Quantity</span>
+            <input class="form-control col-md-6" type="tel" name="amount" placeholder="Enter Quantity" required />
+          </div>
+          </div>
+          <div class="col-md-10">
+          <div class="input_field form-group"> <span><i style="color:#163f03" aria-hidden="true" class="fa fa-id-card"></i> Price</span>
+            <input class="form-control col-md-6" type="tel" name="price" placeholder="Enter Price" required />
+          </div>
+          </div>
+                       
+                       
+                       <div class="form-group">
+                         <div class="col-md-5">
+                           <button type="submit" name="send" class="btn btn-warning" style="background: parrot;border:none;border-radius:5px;" >&emsp;&emsp;ASSIGN<span class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+                         </div>
+                       </div>
+                       
+                   </form>                
+      </div>
+    </div>
+  </div></center-->
+  
+</div>
+                                          <?php
+                                            }
+                                            else{
+                                        ?> 
+                                        <h6>Assigned</h6>
+                                           <?php
+                                            }
+                                        ?> 
+                                        </td>
                                       </tr>
                                     </tbody>
                                     <?php

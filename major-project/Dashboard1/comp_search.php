@@ -24,11 +24,11 @@ $connect = $con;
 if(isset($_POST["query"]))
 {
  $search = mysqli_real_escape_string($connect, $_POST["query"]);
- $query = "SELECT assignments.id,farmers.farmer_name,farmers.farmer_payment_mode,districts.dist_name,crops.crop_name,assignments.alloted_area,assignments.completed_area,assignments.total_amount,assignments.payment_status FROM assignments JOIN farmers ON farmers.id=assignments.farmer_id JOIN districts ON districts.id=assignments.dist_id JOIN crops ON crops.id=assignments.crop_id WHERE assignments.payment_status='Completed' AND crops.crop_name LIKE '%".$search."%'  ";
+ $query = "SELECT assignments.id,farmers.farmer_name,farmers.farmer_payment_mode,districts.dist_name,crops.crop_name,assignments.alloted_area,assignments.total_amount,assignments.payment_status FROM assignments JOIN farmers ON farmers.id=assignments.farmer_id JOIN districts ON districts.id=assignments.dist_id JOIN crops ON crops.id=assignments.crop_id WHERE assignments.payment_status='Completed' AND crops.crop_name LIKE '%".$search."%'  ";
 }
 else
 {
- $query = "SELECT assignments.id,farmers.farmer_name,farmers.farmer_payment_mode,districts.dist_name,crops.crop_name,assignments.alloted_area,assignments.completed_area,assignments.total_amount,assignments.payment_status FROM assignments JOIN farmers ON farmers.id=assignments.farmer_id JOIN districts ON districts.id=assignments.dist_id JOIN crops ON crops.id=assignments.crop_id WHERE assignments.payment_status='Completed' ORDER by assignments.id ";
+ $query = "SELECT assignments.id,farmers.farmer_name,farmers.farmer_payment_mode,districts.dist_name,crops.crop_name,assignments.alloted_area,assignments.total_amount,assignments.payment_status FROM assignments JOIN farmers ON farmers.id=assignments.farmer_id JOIN districts ON districts.id=assignments.dist_id JOIN crops ON crops.id=assignments.crop_id WHERE assignments.payment_status='Completed' ORDER by assignments.id ";
 }
 $result = mysqli_query($connect, $query);
 if(mysqli_num_rows($result) > 0)

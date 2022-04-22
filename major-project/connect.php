@@ -211,9 +211,8 @@ background: linear-gradient(to bottom, var(--light-blue) , var(--light-brown), v
 <?php
 if(isset($_POST['send']))
 {
-include "include/db.php";
-
- $to = 'praveenahirwar51@gmail.com'; 
+    
+     $to = 'praveenahirwar51@gmail.com'; 
  $to1 = $_POST['farmer_email'];
  $to2= $_POST['org_email'];
  
@@ -317,8 +316,14 @@ $headers .= 'From: '.$fromName.'<'.$from.'>' . "\r\n";
 $headers .= 'Cc: praveenahirwar51@gmail.com' . "\r\n"; 
 $headers .= 'Bcc: praveenahirwar51@gmail.com' . "\r\n"; 
  
-// Send email 
-if(mail($to, $subject, $htmlContent, $headers)&&mail($to1, $subject, $htmlContent, $headers)&&mail($to2, $subject, $htmlContent, $headers)){ 
+ 
+include "include/db.php";
+
+
+$sql="INSERT INTO orders (crop_id,farmer_id,org_id,crop_amount,total_amount) VALUES ('".$_POST['crop_id']."','".$_POST['farmer_id']."','".$_POST['org_id']."','".$_POST['crop_area']."','".$_POST['crop_amount']."')";
+
+if($result = $con->query($sql)&&mail($to, $subject, $htmlContent, $headers)&&mail($to1, $subject, $htmlContent, $headers)&&mail($to2, $subject, $htmlContent, $headers))
+{ 
    	$message="<div style='float:center;width:500px' class='alert alert-success'>
    <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
     <strong>Success!</strong> Request Sent Succesfully.
@@ -329,7 +334,8 @@ if(mail($to, $subject, $htmlContent, $headers)&&mail($to1, $subject, $htmlConten
     <strong>Success!</strong> Failed.
   </div>";
 }
-}
+ }
+  
   ?>
 <body class="main-layout ">
     <!-- loader  -->
@@ -366,11 +372,10 @@ if(mail($to, $subject, $htmlContent, $headers)&&mail($to1, $subject, $htmlConten
     <ul class="navbar-nav">
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg" width="40" height="40" class="rounded-circle">
+          <img src="https://myproject45.000webhostapp.com/major-project/images/user.png" width="40" height="40" class="rounded-circle">
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="org_dash.php">Dashboard</a>
-          <a class="dropdown-item" href="org_edit.php">Edit Profile</a>
+          <a class="dropdown-item" href="https://myproject45.000webhostapp.com/major-project/Dashboard1/index.php">Dashboard</a>
           <a class="dropdown-item" href="logout.php">Log Out</a>
         </div>
       </li>   
@@ -453,6 +458,7 @@ else
 
 if($data1 = mysqli_fetch_assoc($qry1))
 {
+     $fid=$data1['id'];
     $fname=$data1['farmer_name'];
      $lname=$data1['farmer_lname'];
      $fmobile=$data1['farmer_mobile'];
@@ -490,7 +496,7 @@ if($data = mysqli_fetch_assoc($qry))
       <h>Organisation Details</h>
         <div ><img style="padding:15px;border-radius:25px" src="https://myproject45.000webhostapp.com/major-project/images/<?php echo $data['org_image']; ?>">
   </div>
-    <h2 style="color:#fff"><?php echo $data['org_name']; ?></h2>
+   <h2 style="color:#fff"><?php echo $data['org_name']; ?></h2>
    <h4 style="color:#fff"><i class="fa fa-phone"></i>&nbsp;<?php echo $data['org_mobile']; ?></h4>
    <h4 style="color:#fff"><i class="fa fa-envelope"></i>&nbsp;<?php echo $data['org_email']; ?></h4>
    <h4 style="color:#fff"><i class="fa fa-address-card"></i>&nbsp;<?php echo $data['org_address']; ?> , <?php echo $data['org_city']; ?> , <?php echo $data['dist_name']; ?></h4>
@@ -503,12 +509,18 @@ if($data = mysqli_fetch_assoc($qry))
 <input hidden type="text" name="crop_name" value="<?php echo $data['crop_name']; ?>">
 <input hidden type="text" name="crop_amount" value="<?php echo $data['crop_amount']; ?>">
 <input hidden type="text" name="crop_area" value="<?php echo $data['crop_area']; ?>">
+<input hidden type="text" name="crop_id" value="<?php echo $data['crop_id']; ?>">
+
+<input hidden type="text" name="org_id" value="<?php echo $data['org_id']; ?>">
+
 <input hidden type="text" name="org_name" value="<?php echo $data['org_name']; ?>">
 <input hidden type="text" name="org_mobile" value="<?php echo $data['org_mobile']; ?>">
 <input hidden type="text" name="org_email" value="<?php echo $data['org_email']; ?>">
 <input hidden type="text" name="org_address" value="<?php echo $data['org_address']; ?>">
 <input hidden type="text" name="org_city" value="<?php echo $data['org_city']; ?>">
 <input hidden type="text" name="dist_name" value="<?php echo $data['dist_name']; ?>">
+<input hidden type="text" name="farmer_id" value="<?php echo $fid; ?>">
+
 <input hidden type="text" name="farmer_name" value="<?php echo $fname; ?>">
 <input hidden type="text" name="farmer_lname" value="<?php echo $lname; ?>">
 <input hidden type="text" name="farmer_account" value="<?php echo $facc; ?>">

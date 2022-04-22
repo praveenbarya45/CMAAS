@@ -1,17 +1,16 @@
 <?php
 session_start();
 include "db.php";
-$result = mysqli_query($con,"SELECT * FROM organisations WHERE id = '". $_SESSION["id"]."'");
+$result = mysqli_query($con,"SELECT * FROM incharges WHERE id = '". $_SESSION["id"]."'");
 $row  = mysqli_fetch_array($result);
 if(is_array($row)) {
-    $oid=$row['id'];
-    $name=$row['org_name'];
-$mob= $row['org_mobile'];
-$email=$row['org_email'];
-$image=$row['org_image'];
+    $name=$row['incharge_name'];
+$mob= $row['incharge_mobile'];
+$email=$row['incharge_email'];
+$image=$row['incharge_image'];
 $add=$row['org_address'];
 $city=$row['org_city'];
-
+$_SESSION['dist_id']=$row['dist_id'];
 } else {
 $message = "Invalid Username or Password!";
 }
@@ -75,8 +74,10 @@ $message = "Invalid Username or Password!";
   <!-- inject:css -->
   <link rel="stylesheet" href="css/vertical-layout-light/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
-   <script>
+  <link rel="shortcut icon" href="https://myproject45.000webhostapp.com/major-project/images/cmass.png" />
+  
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <!--<script>
             $(document).ready(function(){
 
           load_data();
@@ -84,7 +85,7 @@ $message = "Invalid Username or Password!";
              function load_data(query)
            {
           $.ajax({
-           url:"req_search.php",
+           url:"farmer_search.php",
                method:"POST",
                data:{query:query},
              success:function(data)
@@ -93,6 +94,7 @@ $message = "Invalid Username or Password!";
              }
              });
             }
+            
             $('#search_text').keyup(function(){
           var search = $(this).val();
             if(search != '')
@@ -105,47 +107,14 @@ $message = "Invalid Username or Password!";
           }
          });
            });
-           </script>
+           </script>-->
+           
+           
+
+           
 </head>
-<?php
-if(isset($_POST['submit']))
-{
-
-
-$org_id=$_POST['org_id'];
-$cid=$_POST['crop_id'];
-$carea=$_POST['crop_area'];
-$camt=$_POST['crop_amount'];
-$descp=$_POST['description'];
-$image=$_POST['img'];
-$image = $_FILES['img']['name'];
-  	
-  	// Get text
-
-  	// image file directory
-	
-	$target = "https://myproject45.000webhostapp.com/major-project/images/".basename($image);
-move_uploaded_file($_FILES['img']['tmp_name'], $target);
-  //query to insert the variable data into the database
-$sql="INSERT INTO requirements (crop_id,crop_amount,crop_area,org_id,img,description) VALUES ('".$cid."','".$camt."','".$carea."','".$org_id."','".$image."','".$descp."')";
-
- //Execute the query and returning a message
- 
- if(!$result = $con->query($sql))
-{
-  die('Error occured [' . $con->error . ']');
-}
-
-else{
-  		$message="<div style='float:right;width:500px' class='alert alert-success'>
-   <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-    <strong>Success!</strong> Data Added Succesfully.
-  </div>";
-  	}
-  }
-  ?>
 <body>
-  <div class="container-scroller">
+   <div class="container-scroller">
     
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row" style ="background: #052501;">
@@ -156,7 +125,7 @@ else{
           </button>
         </div>
         <div style ="background: #052501;">
-          <a class="navbar-brand brand-logo" href="index.php">
+          <a class="navbar-brand brand-logo" href="admin_dash.php">
             <img src="../images/logo.png" alt="logo" style="height:100%;"/>
           </a>
           <!--<a class="navbar-brand brand-logo-mini" href="index.html">-->
@@ -171,7 +140,7 @@ else{
                 <p class="mb-1 mt-3 font-weight-semibold"><?php echo $name; ?></p>
                 <p class="fw-light text-muted mb-0"><?php echo $email; ?></p>
               </div>
-              <a href="oprofile.php" class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
+              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
               <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i> Messages</a>
               <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2"></i> Activity</a>
               <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-help-circle-outline text-primary me-2"></i> FAQ</a>
@@ -184,11 +153,11 @@ else{
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
             <h1 class="welcome-text" style ="color: #ffffff;">Welcome, <span class="text-green fw-bold" style="color:#27bd15"><?php echo $name; ?></span></h1>
-            <h3 class="welcome-sub-text">Organisation Dashboard </h3>
+            <h3 class="welcome-sub-text">District Incharge Dashboard</h3>
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
-          
+
           <li class="nav-item">
             <form class="search-form" action="#">
               <i class="icon-search" style ="color: #ffffff;"></i>
@@ -297,6 +266,7 @@ else{
     </nav>
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
       
       <div id="right-sidebar" class="settings-panel">
         <i class="settings-close ti-close"></i>
@@ -452,17 +422,30 @@ else{
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar"><br>
         <ul class="nav">
-          <li class="nav-item active">
-            <a class="nav-link " href="index.php">
+          <li class="nav-item">
+            <a class="nav-link " href="admin_dash.php">
               <i class="mdi mdi-grid-large menu-icon"></i>
               <span class="menu-title">Dashboard</span>
             </a>
           </li>
-       
-          <li class="nav-item ">
-            <a class="nav-link" href="requirements.php">
+           <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="menu-icon mdi mdi-floor-plan"></i>
+              <span class="menu-title">Assignments</span>
+              <i class="menu-arrow"></i> 
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="assignments.php">Assignments</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pending_asm.php">Pending Assignments</a></li>
+                <li class="nav-item"> <a class="nav-link" href="copleted_asm.php">Completed Assignments</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="farmers.php">
               <i class="menu-icon mdi mdi-layers-outline"></i>
-              <span class="menu-title">Requirements List</span>
+              <span class="menu-title">Farmers List</span>
             </a>
           </li>
           <li class="nav-item">
@@ -474,90 +457,102 @@ else{
         </ul>
       </nav>
       <!-- partial -->
-      
-       <div class="main-panel">
+      <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
-                <center><div style="background:#fff" class="message"><?php if($message!="") { echo $message; } ?></div></center>
-    
             <div class="col-sm-12">
               <div class="home-tab">
-                <div class="d-sm-flex align-items-center justify-content-between border-bottom">
-                 
-                </div>
-                
-                <center><div style="" class="col md-8">
-                         <div class="card c">
-                <div class="card-body">
-                  <h4 class="card-title">Add Requirements</h4>
                   
-                 <form class="forms-sample" action="add_req.php" method="POST" enctype="multipart/form-data">
-                     <input hidden type="text" name="org_id" value="<?php echo $oid; ?>">
-                    <div class="form-group row">
-                      <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Crop Type</label>
-                      <div class="col-sm-3">
-                          <select class="form-control" name="crop_type">
-                               <option class="form-control" value="0">Select Crop Type</option>
-                              <option class="form-control" value="1">Rabi</option>
-                              <option class="form-control" value="2">Kharif</option>
-                              <option class="form-control" value="3">Zaid</option>
-                             <option class="form-control" value="4">Vegetables</option>
-                          </select>
-                         </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="exampleInputEmail2" class="col-sm-3 col-form-label">Crop Name</label>
-                      <div class="col-sm-3">
-                       <select class="form-control" name="crop_id">
-                              <option class="form-control" value="0">Select Crop</option>
-                           
-                           <?php 
-                           $result = mysqli_query($con,"SELECT * FROM crops");
-while($row  = mysqli_fetch_array($result))
+                    <div class="row">
+                        <?php
+                         session_start();
+                          include "db.php";
+                          
+                          ?>    
+    <center><div style="margin-left:50px;">
+    <div class="w3-modal-content"style=" max-width:40%; border-radius:5px;">
+      <div class="w3-container" style="padding:10px; max-width:100%;">
+        <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                  <form class="well form-horizontal" action="assign.php?id=<?php echo $_GET['id']; ?>" method="POST" enctype="multipart/form-data">
+                                
+                       <!-- Form Name--> <br>
+                       <legend><center><h2><b>Crop Assignment</b></h2></center></legend><br><br>
+                    
+                       <!-- Text input-->
+                       <div class="col-md-10">
+            <div class="input_field form-group">
+            <span><i style="color:#163f03" aria-hidden="true" class="fa fa-id-card"></i> Select Crop Type</span>            
+<select style="color: #000000;" name='crop_type' class='form-control col-md-6'>
+    <option style='background:#ffffff; color: #000000;' value=''>SELECT</option>
+           <?php
+
+$result = mysqli_query($con,"SELECT * FROM crop_types");
+
+while($row = mysqli_fetch_array($result))
 {
+echo "<option style='background:#ffffff; color: #000000;' value='".$row['id']."'>".$row['type_name']." </option>";
+}
+
 
 ?>
-                               <option class="form-control" value="<?php echo $row['id'];?>"><?php echo $row['crop_name']; ?></option>
-                             <?php
-                             }
-                             ?>
-                             </select>  </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="exampleInputMobile" class="col-sm-3 col-form-label">Crop Quantity</label>
-                      <div class="col-sm-3">
-                        <input type="text" class="form-control" name="crop_area" id="exampleInputMobile" placeholder="Enter Crop Quantity">
+</select>
+</div>
+</div>
+               <div class="col-md-10">
+            <div class="input_field form-group">
+            <span><i style="color:#163f03" aria-hidden="true" class="fa fa-id-card"></i> Select Crop</span>            
+<select style="color: #000000;" name='crop' class='form-control col-md-6'>
+    <option style='background:#ffffff; color: #000000;' value=''>SELECT</option>
+           <?php
+
+$result1 = mysqli_query($con,"SELECT * FROM crops");
+
+while($row1 = mysqli_fetch_array($result1))
+{
+echo "<option style='background:#ffffff; color: #000000;' value='".$row1['id']."'>".$row1['crop_name']." </option>";
+}
+
+mysqli_close($con);
+?>
+</select>
+</div>
+</div>
+                       <div class="col-md-10">
+          <div class="input_field form-group"> <span><i style="color:#163f03" aria-hidden="true" class="fa fa-id-card"></i> Enter Quantity</span>
+            <input class="form-control col-md-6" type="tel" name="amount" placeholder="Enter Quantity" required />
+          </div>
+          </div>
+          <div class="col-md-10">
+          <div class="input_field form-group"> <span><i style="color:#163f03" aria-hidden="true" class="fa fa-id-card"></i> Price</span>
+            <input class="form-control col-md-6" type="tel" name="price" placeholder="Enter Price" required />
+          </div>
+          </div>
+                       
+                       
+                       <div class="form-group">
+                         <div class="col-md-5">
+                           <button type="submit" name="send" class="btn btn-warning" style="background: parrot;border:none;border-radius:5px;" >&emsp;&emsp;ASSIGN<span class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+                         </div>
+                       </div>
+                       
+                   </form>                
+      </div>
+    </div>
+  </div></center>
+                        </div>
+
+  
+                        
                       </div>
                     </div>
-                    
-                      <div class="form-group row">
-                      <label for="exampleInputMobile" class="col-sm-3 col-form-label">Crop Amount</label>
-                      <div class="col-sm-3">
-                        <input type="text" class="form-control" name="crop_amount" id="exampleInputMobile" placeholder="Enter Crop Amount">
-                      </div>
-                    </div>
-                    
-                     <div class="form-group row">
-                      <label for="exampleInputMobile" class="col-sm-3 col-form-label">Description</label>
-                      <div class="col-sm-3">
-                        <input type="text" class="form-control" name="description" id="exampleInputMobile" placeholder="Enter Description">
-                      </div>
-                    </div>
-                    
-                     <div class="form-group row">
-                      <label for="exampleInputMobile" class="col-sm-3 col-form-label">Image</label>
-                      <div class="col-sm-3">
-                        <input type="file" class="form-control" name="img" id="exampleInputMobile" placeholder="Enter Description">
-                      </div>
-                    </div>
-                    
-                    
-                    <input style="width:200px" type="submit" class="btn btn-primary me-2" name="submit" value="submit">
-                     </form>
-                </div>
-                </div>
+                  
+              </div>
+              </div>
+            </div>
           </div>
         </div>
+        </div>
+        
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         <footer class="footer">
@@ -570,11 +565,13 @@ while($row  = mysqli_fetch_array($result))
       </div>
       <!-- main-panel ends -->
     </div>
+    
     <!-- page-body-wrapper ends -->
   </div>
+  
   <!-- container-scroller -->
 
-  <!-- plugins:js -->
+ <!-- plugins:js -->
   <script src="vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page -->

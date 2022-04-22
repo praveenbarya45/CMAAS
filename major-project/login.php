@@ -101,7 +101,7 @@ else
                    
                 </div>
                 <div class="row">
-                    <div class="col-md-14 location_icon_bottum">
+                    <div class="col-md-14 location_icon_bottum" style="width:100%;">
                        <div class="row">
                             <div class="col-md-14 ">
                                 <div class="menu-area">
@@ -111,7 +111,7 @@ else
                                                 <li class="active"> <a href="index.php">Home</a> </li>
                                                 <li> <a href="#about">About</a> </li>
                                                 <li><a href="#product">Products</a></li>
-                                                <li><a href="#testimonial">Testimonial</a></li>
+                                                <li><a href="#our_team">Our Team</a></li>
                                                 <li><a href="#contact">Contact Us</a></li>
                                                 
                                             </ul>
@@ -169,7 +169,7 @@ else
     </div>
     <!-- end about -->
     <!-- for_box -->
-    <div class="for_box_bg">
+  <!--  <div class="for_box_bg">
         <div class="container">
             <div class="row">
                 <div class="col-xl-3 col-lg-3 col-md-3 co-sm-l2">
@@ -202,10 +202,10 @@ else
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
     <!-- end for_box -->
     <!-- offer -->
-    <div class="offer">
+  <!--  <div class="offer">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -245,12 +245,12 @@ else
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- end offer -->
 
     <!-- product -->
-    <div id="product" class="product">
+  <!--  <div id="product" class="product">
         <div class="container">
             <div class="container">
                 <div class="row">
@@ -298,11 +298,11 @@ else
             </div>
         </div>
     </div>
-   
+   -->
 
     <!-- end product -->
     <!-- clients -->
-    <div id="testimonial" class="clients">
+ <!--   <div id="testimonial" class="clients">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -317,13 +317,13 @@ else
         <div class="container">
             <div id="testimonial_slider" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
-                <ul class="carousel-indicators">
+             <!--   <ul class="carousel-indicators">
                     <li data-target="#testimonial_slider" data-slide-to="0" class=""></li>
                     <li data-target="#testimonial_slider" data-slide-to="1" class="active"></li>
                     <li data-target="#testimonial_slider" data-slide-to="2" class=""></li>
-                </ul>
+                </ul> 
                 <!-- The slideshow -->
-                <div class="carousel-inner">
+             <!--   <div class="carousel-inner">
                     <div class="carousel-item">
                         <div class="testomonial_section">
 
@@ -405,12 +405,12 @@ else
 
             </div>
         </div>
-    </div>
+    </div> -->
   
     <!-- end clients -->
     <!-- contact -->
 
-    <div id="contact" class="contact">
+ <!--   <div id="contact" class="contact">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -433,7 +433,7 @@ else
             </div>
         </div>
     </div>
-
+-->
    
     <!-- end contact -->
 
@@ -444,41 +444,11 @@ else
             <div class="container">
 
                 <div class="row">
-                     <!--  <div class=" col-md-6 col-sm-12">
-                        <div class="address">
-                            <h3>Send Query</h3>
-                            <div class="">
-                        <div style="margin-top:-100px" class="col-md-8 col-sm-12">
-
-                            <form class="main_form">
-                                <div class="row">
-
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                        <input class="form-control" placeholder="Name" type="text" name="Name">
-                                    </div>
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                        <input class="form-control" placeholder="Email" type="text" name="Email">
-                                    </div>
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                        <input class="form-control" placeholder="Phone" type="text" name="Phone">
-                                    </div>
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                        <textarea class="textarea" placeholder="Message" type="text" name="Message"></textarea>
-                                    </div>
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                        <button class="send">Send</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                        </div>
-                    </div>-->
-
+                    
                     <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
                         <div class="address">
-                            <h3>Subcribe email</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do </p>
+                            <h3>Subcribe Email</h3>
+                            <p>For subscribe, please enter your Email</p>
                             <input class="form-control" placeholder="Your Email" type="type" name="Your Email">
                             <button class="submit-btn">Submit</button>
                         </div>
@@ -490,12 +460,12 @@ else
 
                             <ul class="loca">
                                 <li>
-                                    <a href="#"><img src="icon/loc.png" alt="#" /></a>London 145
-                                    <br>United Kingdom </li>
+                                    <a href="#"><img src="icon/loc.png" alt="#" /></a>India
+                                    </li>
                                 <li>
-                                    <a href="#"><img src="icon/email.png" alt="#" /></a>demo@gmail.com </li>
+                                    <a href="#"><img src="icon/email.png" alt="#" /></a>cmaasindia@gmail.com </li>
                                 <li>
-                                    <a href="#"><img src="icon/call.png" alt="#" /></a>+12586954775 </li>
+                                    <a href="#"><img src="icon/call.png" alt="#" /></a>+919584249678 </li>
                             </ul>
                         </div>
                         
@@ -507,7 +477,7 @@ else
      
         <div class="copyright">
             <div class="container">
-                <p>© 2019 All Rights Reserved. Design By<a href="https://html.design/"> Free Html Templates</a></p>
+                <p>© 2022 All Rights Reserved.</p>
            
         </div>
         </div>

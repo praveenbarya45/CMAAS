@@ -45,7 +45,7 @@ header("Location:../Dashboard/admin_dash.php");
   <!-- inject:css -->
   <link rel="stylesheet" href="../Dashboard/css/vertical-layout-light/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="../Dashboard/images/favicon.png" />
+  <link rel="shortcut icon" href="https://myproject45.000webhostapp.com/major-project/images/cmass.png" />
 </head>
 
 <body>

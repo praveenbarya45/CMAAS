@@ -221,11 +221,10 @@ button:active {
     <ul class="navbar-nav">
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg" width="40" height="40" class="rounded-circle">
+          <img src="https://myproject45.000webhostapp.com/major-project/images/logo.png" width="40" height="40" class="rounded-circle">
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="org_dash.php">Dashboard</a>
-          <a class="dropdown-item" href="org_edit.php">Edit Profile</a>
           <a class="dropdown-item" href="logout.php">Log Out</a>
         </div>
       </li>   

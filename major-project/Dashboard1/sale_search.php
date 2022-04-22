@@ -76,6 +76,7 @@ if(mysqli_num_rows($result) > 0)
                                             <td><div class="badge badge-opacity-success"><a href="view_order.php?id=<?php echo $row['id']; ?>"><i class="fa fa-eye"></i>View</a></div></td>
                                       </tr>
                          <?php
+                          $cnt++;
                          }
 }
                          ?>             
